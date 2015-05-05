@@ -6,7 +6,10 @@
  * Comment: 串口操作类
  ***********************************************************************/
 
+#include <iostream>
 #include "UartTrans.h"
+#include <string>
+#include <cstring>
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       UartOpen
@@ -19,10 +22,10 @@
 // Return:     int  1-成功 0-失败
 ////////////////////////////////////////////////////////////////////////
 
-int UartTrans::UartOpen(int UartNo, int baudRate, string &errStr)
-{
+//int UartTrans::UartOpen(int UartNo, int baudRate, std::string &errStr)
+//{
    // TODO : implement
-}
+//}
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       UartTrans::UartSend(int buf, int len, std::string errStr)
@@ -35,13 +38,13 @@ int UartTrans::UartOpen(int UartNo, int baudRate, string &errStr)
 // Return:     int  1-成功 0-失败
 ////////////////////////////////////////////////////////////////////////
 
-int UartTrans::UartSend(char *buf, int len, string &errStr)
-{
+//int UartTrans::UartSend(char *buf, int len, std::string &errStr)
+//{
    // TODO : implement
-}
+//}
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       UartTrans::UartRecevie(int buf, int len, std::string errStr)
+// Name:       UartTrans::UartRecevie(char* buf, int len, std::string errStr)
 // Purpose:    Implementation of UartTrans::UartRecevie()
 // Comment:    串口接收
 // Parameters:
@@ -51,10 +54,10 @@ int UartTrans::UartSend(char *buf, int len, string &errStr)
 // Return:     int  1-成功 0-失败
 ////////////////////////////////////////////////////////////////////////
 
-int UartTrans::UartRecevie(char *buf, int &len, string &errStr)
-{
+//int UartTrans::UartRecevie(char *buf, int len, std::string &errStr)
+//{
    // TODO : implement
-}
+//}
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       UartTrans::UartColse(std::string errStr)
@@ -65,7 +68,49 @@ int UartTrans::UartRecevie(char *buf, int &len, string &errStr)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int UartTrans::UartColse(std::string errStr)
-{
+//int UartTrans::UartColse(std::string &errStr)
+//{
    // TODO : implement
+//}
+
+int main()
+{
+	using std::string;
+	using std::cout;
+	using std::endl;
+	string errStr;
+	UartTrans uart;
+	if (uart.UartOpen(1, 115200, errStr) == 0)
+	{
+		cout << errStr << endl;
+		return -1;
+	}
+	char* buf = new char;
+	strcpy(buf,"I make it!");
+	int len = strlen(buf);
+	if (uart.UartSend(buf, len, errStr) == 0)
+	{
+		cout << errStr << endl;
+		return -1;
+	}
+	while(1)
+	{
+		if (uart.UartRecevie(buf, len, errStr) == 0)
+		{
+			cout << errStr << endl;
+			return -1;
+		}
+		if (uart.UartSend(buf,len,errStr) == 0)
+		{
+			cout << errStr << endl;
+			return -1;
+		}
+	}
+	if (uart.UartColse(errStr) == 0)
+	{
+		cout << errStr << endl;
+		return -1;
+	}
+	delete(buf);
+	return 0;
 }
