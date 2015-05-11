@@ -3,7 +3,7 @@
  * Author:  Thinkpad
  * Modified: 2015-04-29 14:01:38
  * Purpose: Declaration of the class Camera
- * Comment: ÉãÏñÍ·²Ù×÷Àà
+ * Comment: ????Í·??????
  ***********************************************************************/
 
 #include <stdio.h>
@@ -29,13 +29,13 @@
 class Camera
 {
   public:
-        //¿¿¿¿¿
+        //å¼€å¯æ‘„åƒå¤´
         int OpenCamera(std::string errStr);
-        //¿¿¿¿¿
+        //è®¾ç½®æ‘„åƒå¤´
         int SetCamera(int format,int width,int height,std::string errStr);
-        //¿¿¿¿
+        //è¿›è¡ŒæŠ“å–ç…§ç‰‡
         int GetFrame(int buf,int weight,int lenght,std::string errStr);
-        //¿¿¿¿¿
+        //å…³é—­æ‘„åƒå¤´
         int CloseCamera(std::string errStr);
   private:
          int fd;
