@@ -6,24 +6,50 @@
  * Comment: ÉãÏñÍ·²Ù×÷Àà
  ***********************************************************************/
 
-#if !defined(__Veg_Camera_h)
+#include <stdio.h>
+#include <string>
+#include <iostream>
+#include <cstring>
+#include <errno.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <assert.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <linux/videodev2.h>
+#define V4L2_PIX_FMT_MJPEG 0
+#define V4L2_PIX_FMT_YUV 1         
+
+#if !defined (__Veg_Camera_h)
 #define __Veg_Camera_h
 
 class Camera
 {
-public:
-   /* ´ò¿ªÉãÏñÍ· */
-   int OpenCamera(std::string errStr);
-   /* ÉèÖÃÉãÏñÍ· */
-   int SetCamera(int format, int width, int height, std::string errStr);
-   /* »ñÈ¡Ò»Ö¡Í¼Ïñ£¬Èç¹ûbufÎªNULL£¬Ôò·µ»ØÍ¼ÏñËùĞè¿Õ¼äµÄ´óĞ¡ weight*height */
-   int GetFrame(int buf, int weight, int length, std::string errStr);
-   /* ¹Ø±ÕÉãÏñÍ· */
-   int CloseCamera(std::string errStr);
-
-protected:
-private:
-
+  public:
+        //¿¿¿¿¿
+        int OpenCamera(std::string errStr);
+        //¿¿¿¿¿
+        int SetCamera(int format,int width,int height,std::string errStr);
+        //¿¿¿¿
+        int GetFrame(int buf,int weight,int lenght,std::string errStr);
+        //¿¿¿¿¿
+        int CloseCamera(std::string errStr);
+  private:
+         int fd;
 };
+
+typedef struct
+{
+        void *start;
+        int length;
+}BUFTYPE;
+
+BUFTYPE *user_buf;
+int n_buffer = 0;
+char *_pictureName;
+
 
 #endif
