@@ -3,7 +3,7 @@
  * Author:  Thinkpad
  * Modified: 2015-04-29 14:01:38
  * Purpose: Implementation of the class Camera
- * Comment: ÉãÏñÍ·²Ù×÷Àà
+ * Comment: ????Í·??????
  ***********************************************************************/
 #include <iostream>
 #include <string>
@@ -13,7 +13,7 @@
 ////////////////////////////////////////////////////////////////////////
 // Name:       Camera::OpenCamera(std::string errStr)
 // Purpose:    Implementation of Camera::OpenCamera()
-// Comment:    ´ò¿ªÉãÏñÍ·
+// Comment:    ????????Í·
 // Parameters:
 // - errStr
 // Return:     int
@@ -35,7 +35,7 @@ int Camera::OpenCamera(std::string errStr)
 ////////////////////////////////////////////////////////////////////////
 // Name:       Camera::SetCamera(int format, int width, int height, std::string errStr)
 // Purpose:    Implementation of Camera::SetCamera()
-// Comment:    ÉèÖÃÉãÏñÍ·
+// Comment:    ????????Í·
 // Parameters:
 // - format
 // - width
@@ -100,8 +100,7 @@ int Camera::SetCamera(int format, int width, int height, std::string errStr)
                 exit(EXIT_FAILURE);
         }
 
-        //¿¿¿¿¿¿¿¿¿¿mmap¿¿¿¿ ¿¿¿I/O¿¿¿                     
-
+        //è®¾å¤‡æ–‡ä»¶æ˜ å°„åˆ°å†…å­˜ï¼Œmmapï¼ˆï¼‰å‡½æ•° åŠ é€Ÿäº†I/Oçš„è®¿é—®
         bzero(&reqbuf,sizeof(reqbuf));
         reqbuf.count = 4;
         reqbuf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
@@ -118,8 +117,7 @@ int Camera::SetCamera(int format, int width, int height, std::string errStr)
         n_buffer = reqbuf.count;
 
 
-        //calloc ¿¿¿¿¿¿¿¿¿reqbuf.count¿¿¿¿(*user_buf)¿¿¿¿¿¿¿¿¿¿¿¿
-        //¿¿¿                                                                               
+        //calloc åœ¨å†…å­˜çš„åŠ¨æ€å­˜å‚¨åŒºreqbuf.countä¸ªé•¿åº¦ä¸º(*user_buf)çš„è¿ç»­ç©ºé—´ï¼Œè¿”å›èµ·å§‹åœ°å€çš„æŒ‡é’ˆ         
         user_buf = (BUFTYPE*)calloc(reqbuf.count,sizeof(*user_buf));
         if(user_buf == NULL){
                 fprintf(stderr,"Out of memory\n");
@@ -158,7 +156,7 @@ int Camera::SetCamera(int format, int width, int height, std::string errStr)
                 }
         }
 
-        //¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿  V4L2                  
+        //é©±åŠ¨æ‘„åƒå¤´å¼€å§‹æŠ“å–ç…§ç‰‡çš„å‡†å¤‡å·¥ä½œï¼Œæ¶‰åŠåˆ°å†…æ ¸  V4L2 
         for(i = 0;i < n_buffer;i ++)
         {
                 struct v4l2_buffer buf;
@@ -175,7 +173,7 @@ int Camera::SetCamera(int format, int width, int height, std::string errStr)
                 }
         }
 
-        //ioctl¿¿¿¿¿¿¿¿¿¿I/O¿¿¿¿¿¿¿¿¿                                                    
+        //ioctlæ˜¯é©±åŠ¨ç¨‹åºä¸­å¯¹è®¾å¤‡çš„I/Oé€šé“è¿›è¡Œç®¡ç†çš„å‡½æ•°                                                     
         type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         if(-1 == ioctl(this->fd,VIDIOC_STREAMON,&type))
         {
@@ -191,7 +189,7 @@ int Camera::SetCamera(int format, int width, int height, std::string errStr)
 ////////////////////////////////////////////////////////////////////////
 // Name:       Camera::GetFrame(int buf, int weight, int length, std::string errStr)
 // Purpose:    Implementation of Camera::GetFrame()
-// Comment:    »ñÈ¡Ò»Ö¡Í¼Ïñ£¬Èç¹ûbufÎªNULL£¬Ôò·µ»ØÍ¼ÏñËùĞè¿Õ¼äµÄ´óĞ¡ weight*height
+// Comment:    ??È¡Ò»Ö¡Í¼????????bufÎªNULL???ò·µ»?Í¼???????Õ¼??Ä´?Ğ¡ weight*height
 // Parameters:
 // - buf
 // - weight
@@ -203,7 +201,7 @@ int Camera::SetCamera(int format, int width, int height, std::string errStr)
 int Camera::GetFrame(int buf, int weight, int length, std::string errStr)
 {
      
-      //v4l2(video 4 linux 2¿¿¿¿uvc¿¿usb¿¿¿¿¿¿¿¿¿¿¿¿¿                                                            
+      //v4l2(video 4 linux 2ï¼‰æ˜¯é’ˆå¯¹uvcå…é©±usbè®¾å¤‡çš„ç¼–ç¨‹æ¡†æ¶ï¼Œæ¶‰åŠåˆ°å†…æ ¸                                                            
       struct v4l2_buffer buff;
       unsigned int i;
 
@@ -249,7 +247,7 @@ int Camera::GetFrame(int buf, int weight, int length, std::string errStr)
                    exit(EXIT_FAILURE);
             }
 
-            //ioctl¿¿¿¿¿¿¿¿¿¿I/O¿¿¿¿¿¿¿¿¿                                              
+                                                      
             if(-1 == ioctl(this->fd,VIDIOC_DQBUF,&buff))
             {
                perror("Fail to ioctl 'VIDIOC_DQBUF'");
@@ -257,18 +255,17 @@ int Camera::GetFrame(int buf, int weight, int length, std::string errStr)
             }
 
             assert(buff.index < n_buffer);
-            //.............................................                         
-            //process_image(user_buf[buff.index].start,user_buf[buff.index].length);    
+            //.............................................                          
             FILE *fp;
             char picture_name[256];
             void *addr = user_buf[buff.index].start;
             int length = user_buf[buff.index].length;
 
 
-            //¿¿¿¿¿¿¿¿¿¿¿¿                                                                        
+            //å°†æŠ“å–çš„ç…§ç‰‡å­˜å…¥ä¸‹é¢è·¯å¾„                                                                         
             sprintf(picture_name,"/mnt/camera.jpg");
 
-            //fp¿¿camera.jpg
+            //fpæŒ‡å‘camera.jpg
             if((fp = fopen(picture_name,"w")) == NULL)
             {
                  perror("Fail to fopen");
@@ -297,7 +294,7 @@ int Camera::GetFrame(int buf, int weight, int length, std::string errStr)
 ////////////////////////////////////////////////////////////////////////
 // Name:       Camera::CloseCamera(std::string errStr)
 // Purpose:    Implementation of Camera::CloseCamera()
-// Comment:    ¹Ø±ÕÉãÏñÍ·
+// Comment:    ?Ø±?????Í·
 // Parameters:
 // - errStr
 // Return:     int
@@ -307,7 +304,7 @@ int Camera::CloseCamera(std::string errStr)
 {
         enum v4l2_buf_type type;
         unsigned int i;
-        //¿¿¿¿¿¿
+        //åœæ­¢æŠ“å–ç…§ç‰‡
         type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         if(-1 == ioctl(this->fd,VIDIOC_STREAMOFF,&type))
         {
@@ -315,7 +312,7 @@ int Camera::CloseCamera(std::string errStr)
                 exit(EXIT_FAILURE);
         }
 
-        //¿¿¿¿¿¿
+        //é‡Šæ”¾å†…å­˜ç©ºé—´
         for(i = 0;i < n_buffer;i ++)
         {
                 if(-1 == munmap(user_buf[i].start,user_buf[i].length))
